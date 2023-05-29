@@ -1,31 +1,38 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
-	let userNumberChoice = 0;
-	function renderBoxen() {
-		const containerDiv = document.getElementById("boxContainer");
-		containerDiv.innerHTML = ``;
-		/*       onClick={(event) => {
-        event.preventDefault();
-        renderEmptyContainer();
-      }}; */
-		for (let i = 0; i < userNumberChoice; i++) {
-			const randomSizeValue = Math.random() * (150 - 75) + 75;
-			const randomColorValue = Math.floor(Math.random() * 16777215).toString(
-				16
-			);
-			containerDiv.innerHTML += `<div class="innerBox" style= "display: flex;
-      border: solid 1px white;
-      width: ${randomSizeValue}px;
-      height: ${randomSizeValue}px;
-      background-color: #${randomColorValue}"
-      onClick=()=>;
-      >Box ${i}</div>`;
-		}
+	let [userNumber, setUserNumber] = useState(0);
+
+	/* Setup loop below */
+	let boxen = "";
+	for (let i = 0; i < userNumber; i++) {
+		const randomSizeValue = Math.random() * (150 - 75) + 75;
+		const randomColorValue = Math.floor(Math.random() * 16777215).toString(16);
+		boxen = (
+			<div
+				className="innerBox"
+				/* 				style={{
+					display: "flex",
+					border: "solid 1px white",
+					width: `${randomSizeValue}px`,
+					height: `${randomSizeValue}px`,
+					backgroundColor: `#${randomColorValue}`,
+				}} */
+			>
+				testbox
+			</div>
+		);
 	}
-	function renderEmptyContainer() {
-		const containerDiv = document.getElementById("boxContainer");
-		containerDiv.innerText = "Empty Container";
+
+	{
+		/* <div class="innerBox" style= "display: flex;
+	border: solid 1px white;
+	width: ${randomSizeValue}px;
+	height: ${randomSizeValue}px;
+	background-color: #${randomColorValue}"
+	/* onClick=()=>;
+	>Box ${i}</div>; */
 	}
 	return (
 		<>
@@ -47,8 +54,9 @@ function App() {
 						value="Submit"
 						onClick={(event) => {
 							event.preventDefault();
-							userNumberChoice = document.getElementById("numberInput").value;
-							renderBoxen();
+							userNumber = document.getElementById("numberInput").value;
+							console.log("user clicked: ", userNumber);
+							setUserNumber(userNumber);
 						}}
 					/>
 					<input
@@ -56,7 +64,8 @@ function App() {
 						value="Clear"
 						onClick={(event) => {
 							event.preventDefault();
-							renderEmptyContainer();
+							setUserNumber(0);
+							document.getElementById("numberInput").value = "";
 						}}
 					/>
 				</form>
@@ -66,10 +75,11 @@ function App() {
 				style={{
 					display: "flex",
 					border: "solid 1px grey",
+					height: "200px",
+					width: "800px",
 				}}
 			>
-				Empty Container
-				<br />
+				{userNumber ? boxen : "Empty Container"}
 			</div>
 		</>
 	);
